@@ -1,0 +1,7 @@
+form {
+  min-height: 300px;
+  width: 400px;
+  background-color: rgb(164, 164, 255);
+  padding: 30px;
+  border-radius: 7px;
+}
