@@ -9,10 +9,11 @@ import java.util.List;
 
 @Service
 public class TodoItemService {
-   @Autowired private TodoItemRepository todoItemRepository;
+   @Autowired
+   private TodoItemRepository todoItemRepository;
 
-   public List<TodoItem> getAllTodos() {
-      return (List<TodoItem>) todoItemRepository.findAll();
+   public List getAllTodos() {
+      return (List) this.todoItemRepository.findAll();
    }
 
    public TodoItem createTodo(TodoItem todoItem) {

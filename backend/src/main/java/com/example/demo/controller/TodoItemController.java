@@ -1,27 +1,29 @@
 package com.example.demo.controller;
 
-import com.example.demo.data.entity.TodoItem;
+
+
+
 import com.example.demo.service.TodoItemService;
+import com.example.demo.data.entity.TodoItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
+@CrossOrigin (origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/api")
-
+@RequestMapping ("/api")
 public class TodoItemController {
-  @Autowired private TodoItemService todoItemService;
+  @Autowired
+  private TodoItemService todoItemService;
 
-  @CrossOrigin
-  @GetMapping("/todos")
-  public List<TodoItem> getTodo() {
-     return todoItemService.getAllTodos();
+  @GetMapping ("/todos")
+  public ResponseEntity getTodo() {
+     return ResponseEntity.ok(todoItemService.getAllTodos()) ;
   }
 
-  @PostMapping("/todos")
+  @PostMapping ("/todos")
     public TodoItem AddTodoItem(@RequestBody TodoItem todoItem){
       return todoItemService.createTodo(todoItem);
   }

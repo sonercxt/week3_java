@@ -8,11 +8,13 @@ public class TodoItem {
 
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
-    @Column(name = "id")
     private Long id;
-
-    @Column (name = "todo")
     private String todo;
+
+    public TodoItem (){
+
+    }
+
     public TodoItem (Long pId, String pTodo){
         this.todo = pTodo;
         this.id = pId;
