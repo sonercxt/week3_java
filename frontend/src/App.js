@@ -22,7 +22,7 @@ function App() {
     e.preventDefault();
     await fetch("http://localhost:8080/api/todos", {
       method: "POST",
-      body: JSON.stringify({"todo" : newTodo}),
+      body: JSON.stringify({ todo: newTodo }),
       headers: { "Content-Type": "application/json" },
     });
     // setTodoList([...todoList, { todo: newTodo, id: uuid4() }]);
@@ -30,7 +30,7 @@ function App() {
   };
 
   const handleClickDelete = async (pId) => {
-    await fetch(`http://localhost:8080/api/todos` + pId, {
+    await fetch(`http://localhost:8080/api/todos/` + pId, {
       method: "DELETE",
     });
 
