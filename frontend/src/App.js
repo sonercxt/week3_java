@@ -8,7 +8,7 @@ function App() {
   const [newTodo, setNewTodo] = useState("");
 
   const getTodoList = async () => {
-    const response = await fetch("http://localhost:8080/api/todo/get");
+    const response = await fetch("http://localhost:8080/api/todos");
     const data = await response.json();
     setTodoList(data);
     console.log(data);
@@ -20,22 +20,28 @@ function App() {
 
   const handleClickAdd = async (e) => {
     e.preventDefault();
-    await fetch("http://localhost:8080/api/todo/post", {
+    await fetch("http://localhost:8080/api/todos", {
       method: "POST",
-      body: JSON.stringify({ todo: newTodo, id: uuid4() }),
+      body: JSON.stringify({"todo" : newTodo}),
       headers: { "Content-Type": "application/json" },
     });
-    setTodoList([...todoList, { todo: newTodo, id: uuid4() }]);
+    // setTodoList([...todoList, { todo: newTodo, id: uuid4() }]);
+    await getTodoList();
   };
 
-  const handleClickDelete = (pId) => {
-    setTodoList(todoList.filter((todo) => todo?.id !== pId));
+  const handleClickDelete = async (pId) => {
+    await fetch(`http://localhost:8080/api/todos` + pId, {
+      method: "DELETE",
+    });
+
+    // setTodoList(todoList.filter((todo) => todo?.id !== pId));
+    await getTodoList();
   };
 
   console.log(todoList);
 
   const showTodoList = () => {
-    let template = todoList.map((todo, index) => (
+    let template = todoList?.map((todo, index) => (
       <div className="d-flex mt-2">
         <div class="border border-1 bg-white d-flex align-items-center" style={{ width: "100%" }}>
           <input className="form-check-input ms-2 mb-1 fs-4" type="checkbox" value="" id="flexCheckDefault" />
@@ -69,7 +75,7 @@ function App() {
                 </button>
               </div>
 
-              {showTodoList()}
+              {todoList.length !== 0 ? showTodoList() : ""}
             </form>
           </div>
         </div>
