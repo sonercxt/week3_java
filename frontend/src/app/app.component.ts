@@ -26,7 +26,7 @@ export class AppComponent {
     this.getTodo();
   }
 
-  getTodo(){
+  getTodo() {
     this.todos = this.http.get<Todo[]>(this.ROOT_URL);
   }
 
