@@ -17,14 +17,13 @@
           
           <div class="d-flex mt-2" *ngFor="let todo of todos | async">
             <div class="border border-1 bg-white d-flex align-items-center" style= "width: 100%" >
-              <input class="form-check-input ms-2 mb-1 fs-4" type="checkbox" value="" id="flexCheckDefault" />
+              <input class="form-check-input ms-2 mb-1 fs-4" type="checkbox" (change)="bulk($event)" [checked]="checkTodo" value="todo.isChecked" id="flexCheckDefault" />
               <label class="form-check-label ms-5" for="flexCheckDefault">
                {{todo?.todo}}
               </label>
             </div>
-            <button class="btn btn-danger" type="button">
-              x
-              <!-- <BsFillTrashFill /> -->
+            <button class="btn btn-danger" (click)="deleteTodo(todo.id)" type="button">
+              <i class="bi bi-trash"></i>
             </button>
           </div>
         </div>

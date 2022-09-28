@@ -11,7 +11,9 @@ import { HttpClient } from '@angular/common/http';
 export class AppComponent {
   readonly ROOT_URL = 'http://localhost:8080/api/todos';
   newTodo: string;
+  id: number;
   todos: Observable<Todo[]>;
+  checkTodo: boolean;
   // newPost: Observable<any>;
 
   // addTodo() {
@@ -28,17 +30,35 @@ export class AppComponent {
 
   getTodo() {
     this.todos = this.http.get<Todo[]>(this.ROOT_URL);
+    console.log(this.todos)
   }
 
   addTodo() {
     const data: Todo = {
       todo: this.newTodo,
+      id: null,
+      isChecked: this.checkTodo
     };
     this.http.post<Todo[]>(this.ROOT_URL, data).subscribe((res) => {
-      console.log(res);
+      this.getTodo();
     });
+    this.newTodo = '';
+  }
 
-    this.getTodo();
+  deleteTodo(pId: number) {
+    this.http.delete<Todo[]>(this.ROOT_URL + '/' + pId).subscribe((res) => {
+      this.getTodo();
+    });
+  }
+
+  bulk(e: any){
+    if(e.target.checked === true){
+      this.checkTodo = true
+    } else {
+      this.checkTodo = false
+    }
+
+    console.log(this.checkTodo)
   }
 
   constructor(private http: HttpClient) {}
