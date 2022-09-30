@@ -33,5 +33,11 @@ public class TodoItemController {
     todoItemService.removeTodo(id);
   }
 
+  @PutMapping("/todos/{id}")
+  public TodoItem updateTodo(@RequestBody TodoItem todoItem, @PathVariable Long id) {
+    return todoItemService.updateTodo(id,todoItem);
+
+  }
+
 
 }

@@ -2,27 +2,54 @@
 <main>
   <div>
     <div class="d-flex justify-content-center">
-     
-
       <div class="mt-5 text-center">
         <div id="form">
           <h1 class="text-white">Todo List +</h1>
           <div class="d-flex justify-content-center mt-3 mb-4">
-            <input type="text" class="form-control" placeholder="Add New Todo" [(ngModel)]="newTodo"/>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Add New Todo"
+              [(ngModel)]="newTodo"
+            />
 
-            <button type="submit" (click)="addTodo()" class="btn btn-primary ms-3">
+            <button
+              type="submit"
+              (click)="addTodo()"
+              class="btn btn-primary ms-3"
+            >
               Add
             </button>
           </div>
-          
-          <div class="d-flex mt-2" *ngFor="let todo of todos | async">
-            <div class="border border-1 bg-white d-flex align-items-center" style= "width: 100%" >
-              <input class="form-check-input ms-2 mb-1 fs-4" type="checkbox" (change)="bulk($event)" [checked]="checkTodo" value="todo.isChecked" id="flexCheckDefault" />
-              <label class="form-check-label ms-5" for="flexCheckDefault">
-               {{todo?.todo}}
+
+          <div class="d-flex mt-2" *ngFor="let todo of todoList">
+            <div class="border border-1 bg-white d-flex" style="width: 100%">
+              <input
+                class="form-check-input ms-2 fs-4"
+                type="checkbox"
+                (change)="handleClickCheckboxUpdate($event, todo.id)"
+                [value]="todo.checking"
+                [checked]="todo.checking"
+                id="flexCheckDefault"
+              />
+              <label
+                class="form-check-label ms-3 mt-2 fs-5"
+                for="flexCheckDefault"
+              >
+                <p
+                  [class]="
+                    todo.checking ? 'todo-with-line' : 'todo-without-line'
+                  "
+                >
+                  {{ todo?.todo }}
+                </p>
               </label>
             </div>
-            <button class="btn btn-danger" (click)="deleteTodo(todo.id)" type="button">
+            <button
+              class="btn btn-danger mb-3"
+              (click)="deleteTodo(todo.id)"
+              type="button"
+            >
               <i class="bi bi-trash"></i>
             </button>
           </div>

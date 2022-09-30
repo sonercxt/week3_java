@@ -23,4 +23,9 @@ public class TodoItemService {
    public void removeTodo(Long id){
       todoItemRepository.deleteById(id);
    }
+
+   public TodoItem updateTodo(Long id, TodoItem todoItem) {
+      todoItem.setId(id);
+      return todoItemRepository.save(todoItem);
+   }
 }

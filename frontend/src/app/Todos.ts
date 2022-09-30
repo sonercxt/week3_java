@@ -1,6 +1,5 @@
 export interface Todo {
-    id: any;
-    todo: string;
-    isChecked: boolean
-  
+  id: any;
+  todo: string;
+  checking: boolean;
 }

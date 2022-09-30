@@ -11,16 +11,16 @@ public class TodoItem {
     private Long id;
     private String todo;
 
-    private boolean isChecked;
+    private boolean checking;
 
     public TodoItem (){
 
     }
 
-    public TodoItem (Long pId, String pTodo , boolean pChecked){
+    public TodoItem (Long pId, String pTodo , boolean pChecking){
         this.todo = pTodo;
         this.id = pId;
-        this.isChecked = pChecked;
+        this.checking = pChecking;
     }
 
     public Long getId() {
@@ -39,11 +39,11 @@ public class TodoItem {
         this.todo = todo;
     }
 
-    public boolean isChecked() {
-        return isChecked;
+    public boolean isChecking() {
+        return checking;
     }
 
-    public void setChecked(boolean checked) {
-        isChecked = checked;
+    public void setChecking(boolean checking) {
+        this.checking = checking;
     }
 }

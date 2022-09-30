@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Todo } from './Todos';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { filter } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -12,32 +14,27 @@ export class AppComponent {
   readonly ROOT_URL = 'http://localhost:8080/api/todos';
   newTodo: string;
   id: number;
-  todos: Observable<Todo[]>;
+  // todos: Observable<Todo[]>;
+  todoList: Todo[];
   checkTodo: boolean;
-  // newPost: Observable<any>;
-
-  // addTodo() {
-  //   let todo = new Todo();
-  //   todo.name = this.newTodo;
-  //   todo.isCompleted = true;
-  //   this.todos.push(todo);
-  //   this.newTodo = '';
-  // }
+  todoWithoutLine: string = 'todo-without-line';
+  todoWithLine: string = 'todo-with-line';
 
   ngOnInit() {
     this.getTodo();
   }
 
   getTodo() {
-    this.todos = this.http.get<Todo[]>(this.ROOT_URL);
-    console.log(this.todos)
+    this.http.get<Todo[]>(this.ROOT_URL).subscribe((data) => {
+      this.todoList = data;
+    });
   }
 
   addTodo() {
     const data: Todo = {
       todo: this.newTodo,
       id: null,
-      isChecked: this.checkTodo
+      checking: this.checkTodo,
     };
     this.http.post<Todo[]>(this.ROOT_URL, data).subscribe((res) => {
       this.getTodo();
@@ -51,14 +48,25 @@ export class AppComponent {
     });
   }
 
-  bulk(e: any){
-    if(e.target.checked === true){
-      this.checkTodo = true
+  handleClickCheckboxUpdate(e: any, pId: any) {
+    let selectedTodo = [];
+    if (e.target.checked === true) {
+      this.checkTodo = true;
     } else {
-      this.checkTodo = false
+      this.checkTodo = false;
     }
 
-    console.log(this.checkTodo)
+    selectedTodo = this.todoList.filter((todo) => todo.id === pId);
+    console.log(selectedTodo);
+    const data: Todo = {
+      todo: selectedTodo[0].todo,
+      id: null,
+      checking: this.checkTodo,
+    };
+
+    this.http.put<any>(this.ROOT_URL + '/' + pId, data).subscribe((res) => {
+      this.getTodo();
+    });
   }
 
   constructor(private http: HttpClient) {}
