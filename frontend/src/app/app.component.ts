@@ -67,6 +67,8 @@ export class AppComponent {
     this.http.put<any>(this.ROOT_URL + '/' + pId, data).subscribe((res) => {
       this.getTodo();
     });
+
+    this.checkTodo = false
   }
 
   constructor(private http: HttpClient) {}
