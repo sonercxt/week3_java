@@ -10,7 +10,6 @@ public class TodoItem {
     @GeneratedValue (strategy = GenerationType.AUTO)
     private Long id;
     private String todo;
-
     private boolean checking;
 
     public TodoItem (){
